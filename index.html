@@ -1,594 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎶 Vinyl Record of Love</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vinyl Record of Love</title>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap');
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Georgia", serif;
+  }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Quicksand", sans-serif;
-      user-select: none;
+  body {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #3b2c24, #120c09);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+
+  /* ---------- ROOM BACKGROUND ---------- */
+  .room {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 70% 20%, rgba(255,180,90,0.25), transparent 60%),
+                radial-gradient(circle at 30% 40%, rgba(255,255,255,0.04), transparent 70%),
+                linear-gradient(to bottom, #241812, #0d0806);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 40px;
+  }
+
+  /* Lamp glow */
+  .lampGlow {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(255,190,100,0.35), transparent 70%);
+    filter: blur(8px);
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.65; transform: scale(1); }
+    50% { opacity: 0.95; transform: scale(1.05); }
+  }
+
+  /* Floating dust */
+  .dust {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .dust span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 50%;
+    animation: floatDust 10s linear infinite;
+  }
+
+  @keyframes floatDust {
+    from { transform: translateY(110vh) translateX(0); opacity: 0; }
+    20% { opacity: 0.4; }
+    80% { opacity: 0.25; }
+    to { transform: translateY(-20vh) translateX(50px); opacity: 0; }
+  }
+
+  /* ---------- TABLE ---------- */
+  .table {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 42%;
+    background: linear-gradient(to bottom, #4a2d1f, #2a150d);
+    box-shadow: inset 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Wood grain effect */
+  .table::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.03) 4px,
+      transparent 4px,
+      transparent 12px
+    );
+    opacity: 0.35;
+  }
+
+  /* ---------- PLAYER WRAPPER ---------- */
+  .playerWrapper {
+    position: relative;
+    width: min(520px, 92vw);
+    height: 360px;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  /* ---------- PLAYER BODY ---------- */
+  .player {
+    position: relative;
+    width: 100%;
+    height: 270px;
+    background: linear-gradient(to bottom, #2d2b2a, #151312);
+    border-radius: 22px;
+    box-shadow: 0 25px 55px rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: visible;
+  }
+
+  /* Front wood panel */
+  .player::before {
+    content: "";
+    position: absolute;
+    bottom: -35px;
+    left: 10px;
+    right: 10px;
+    height: 90px;
+    background: linear-gradient(to bottom, #6c3d25, #2b160d);
+    border-radius: 18px;
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Knob */
+  .knob {
+    position: absolute;
+    bottom: -5px;
+    left: 40px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #d8d8d8, #777);
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.4);
+    z-index: 5;
+  }
+
+  .knob::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 18px;
+    width: 8px;
+    height: 18px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.55);
+  }
+
+  /* ---------- VINYL ---------- */
+  .vinyl {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.18), transparent 55%),
+                radial-gradient(circle, #222 0%, #111 55%, #000 100%);
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  /* Grooves */
+  .vinyl::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+      circle,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 1px,
+      transparent 2px,
+      transparent 5px
+    );
+    opacity: 0.6;
+  }
+
+  /* Label */
+  .vinylLabel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, #f5d19c, #c07b2c);
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color: rgba(0,0,0,0.8);
+    font-weight: bold;
+    text-align: center;
+    padding: 6px;
+    z-index: 3;
+  }
+
+  /* Hole */
+  .vinylLabel::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #222;
+    border-radius: 50%;
+  }
+
+  /* Shine effect */
+  .shine {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.2), transparent 60%);
+    opacity: 0.35;
+  }
+
+  /* Rotation animation */
+  .playing {
+    animation: spin 2.2s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg); }
+  }
+
+  /* ---------- TONEARM ---------- */
+  .tonearm {
+    position: absolute;
+    top: 35px;
+    right: 50px;
+    width: 130px;
+    height: 16px;
+    transform-origin: 10px 8px;
+    transform: rotate(-25deg);
+    transition: transform 1.2s ease;
+    z-index: 10;
+  }
+
+  .tonearmBody {
+    position: absolute;
+    width: 120px;
+    height: 10px;
+    background: linear-gradient(to right, #bbb, #555);
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  }
+
+  .needle {
+    position: absolute;
+    right: -5px;
+    top: 4px;
+    width: 22px;
+    height: 12px;
+    background: linear-gradient(to bottom, #333, #111);
+    border-radius: 4px;
+    box-shadow: inset 0 2px 3px rgba(255,255,255,0.1);
+  }
+
+  .tonearmBase {
+    position: absolute;
+    left: 0;
+    top: -8px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #aaa, #444);
+    box-shadow: inset 0 4px 6px rgba(0,0,0,0.4);
+  }
+
+  .tonearm.playingArm {
+    transform: rotate(-5deg);
+  }
+
+  /* ---------- MESSAGE AREA ---------- */
+  .messageBox {
+    position: absolute;
+    top: -90px;
+    width: 100%;
+    text-align: center;
+    padding: 0 20px;
+    z-index: 50;
+  }
+
+  .messageText {
+    font-size: 18px;
+    line-height: 1.5;
+    color: rgba(255,240,220,0.95);
+    text-shadow: 0 3px 15px rgba(0,0,0,0.8);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: 0.6s ease;
+    font-style: italic;
+  }
+
+  .messageText.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hint {
+    font-size: 13px;
+    opacity: 0.65;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- FINAL OVERLAY ---------- */
+  .finalOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 28px;
+    text-align: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: 1s ease;
+  }
+
+  .finalOverlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .finalText {
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(255,240,220,0.95);
+    text-shadow: 0 4px 18px rgba(0,0,0,0.85);
+    font-style: italic;
+  }
+
+  /* Mobile improvements */
+  @media (max-width: 500px) {
+    .playerWrapper {
+      height: 340px;
     }
 
-    body {
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle at top, #3b2c22, #120b08);
-      position: relative;
-      color: white;
+    .messageText {
+      font-size: 16px;
     }
 
-    /* Vintage noise overlay */
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
-      opacity: 0.12;
-      mix-blend-mode: overlay;
-      z-index: 1;
-      pointer-events: none;
+    .finalText {
+      font-size: 16px;
     }
+  }
 
-    /* Warm lamp glow */
-    .lampGlow {
-      position: absolute;
-      top: -20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 900px;
-      background: radial-gradient(circle, rgba(255,200,140,0.25), transparent 70%);
-      z-index: 1;
-      filter: blur(10px);
-    }
-
-    /* Main scene */
-    .scene {
-      position: relative;
-      width: 92%;
-      max-width: 650px;
-      height: 92%;
-      max-height: 820px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      z-index: 5;
-    }
-
-    /* Floating lyric message */
-    .lyricBox {
-      position: absolute;
-      top: 8%;
-      width: 92%;
-      max-width: 600px;
-      text-align: center;
-      padding: 20px 18px;
-      border-radius: 18px;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      box-shadow: 0px 0px 40px rgba(0,0,0,0.6);
-      min-height: 130px;
-      transition: all 1.2s ease;
-    }
-
-    .lyricBox h1 {
-      font-family: "Pacifico", cursive;
-      font-size: 2.1rem;
-      color: #ffd6b8;
-      text-shadow: 0px 0px 18px rgba(255,180,120,0.35);
-      margin-bottom: 10px;
-    }
-
-    .lyricText {
-      font-size: 1.2rem;
-      font-weight: 700;
-      line-height: 1.7;
-      color: #fff3ea;
-      text-shadow: 0px 0px 14px rgba(255,190,130,0.18);
-      opacity: 0.95;
-      min-height: 70px;
-    }
-
-    .hintText {
-      margin-top: 10px;
-      font-size: 0.85rem;
-      opacity: 0.75;
-      color: #ffe5d6;
-    }
-
-    /* Table */
-    .table {
-      width: 100%;
-      height: 230px;
-      border-radius: 26px;
-      background: linear-gradient(180deg, #6a3f26, #3a1f13);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0px -10px 40px rgba(0,0,0,0.6);
-    }
-
-    /* Wood grain effect */
-    .table::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        rgba(255,255,255,0.02) 0px,
-        rgba(255,255,255,0.02) 8px,
-        rgba(0,0,0,0.05) 16px
-      );
-      opacity: 0.35;
-      mix-blend-mode: overlay;
-    }
-
-    /* Record player base */
-    .player {
-      position: absolute;
-      left: 50%;
-      top: -120px;
-      transform: translateX(-50%);
-      width: 380px;
-      height: 230px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #7b4a2d, #4a2515);
-      box-shadow: 0px 20px 50px rgba(0,0,0,0.65);
-      border: 1px solid rgba(255,255,255,0.12);
-      overflow: hidden;
-    }
-
-    /* Player texture */
-    .player::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        90deg,
-        rgba(255,255,255,0.03) 0px,
-        rgba(255,255,255,0.03) 6px,
-        rgba(0,0,0,0.04) 12px
-      );
-      opacity: 0.4;
-    }
-
-    /* Vinyl plate area */
-    .plate {
-      position: absolute;
-      top: 18px;
-      left: 20px;
-      width: 200px;
-      height: 200px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.9));
-      box-shadow: inset 0px 0px 25px rgba(255,255,255,0.06);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Vinyl disc */
-    .vinyl {
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      background: repeating-radial-gradient(
-        circle,
-        rgba(0,0,0,0.95) 0px,
-        rgba(20,20,20,0.95) 4px,
-        rgba(0,0,0,0.95) 7px
-      );
-      box-shadow: 0px 0px 30px rgba(0,0,0,0.8);
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.5s ease;
-    }
-
-    /* Vinyl reflection */
-    .vinyl::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 60%);
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
-    /* Vinyl label */
-    .label {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, #ffd6a8, #ff9f66);
-      box-shadow: inset 0px 0px 10px rgba(0,0,0,0.4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Pacifico", cursive;
-      font-size: 0.8rem;
-      color: #4a1d0f;
-    }
-
-    /* Center pin */
-    .pin {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: #f0f0f0;
-      box-shadow: 0px 0px 6px rgba(255,255,255,0.5);
-      z-index: 10;
-    }
-
-    /* Needle arm */
-    .needle {
-      position: absolute;
-      top: 30px;
-      right: 25px;
-      width: 140px;
-      height: 12px;
-      background: linear-gradient(90deg, #bdbdbd, #6d6d6d);
-      border-radius: 8px;
-      transform-origin: left center;
-      transform: rotate(-30deg);
-      transition: transform 1.2s ease;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
-    }
-
-    .needle::before {
-      content: "";
-      position: absolute;
-      left: -18px;
-      top: -10px;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, #dedede, #7a7a7a);
-      box-shadow: inset 0px 0px 8px rgba(0,0,0,0.4);
-    }
-
-    .needle::after {
-      content: "";
-      position: absolute;
-      right: -12px;
-      top: -4px;
-      width: 18px;
-      height: 18px;
-      border-radius: 6px;
-      background: #222;
-      box-shadow: 0px 0px 6px rgba(0,0,0,0.6);
-    }
-
-    /* Buttons */
-    .controls {
-      position: absolute;
-      bottom: 18px;
-      right: 25px;
-      display: flex;
-      gap: 12px;
-      z-index: 3;
-    }
-
-    .btn {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.18);
-      box-shadow: inset 0px 0px 6px rgba(0,0,0,0.4);
-    }
-
-    /* Speaker grill */
-    .speaker {
-      position: absolute;
-      top: 80px;
-      right: 20px;
-      width: 120px;
-      height: 80px;
-      border-radius: 16px;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 5px;
-      padding: 10px;
-      opacity: 0.9;
-    }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-    }
-
-    /* Playing mode */
-    .playing .vinyl {
-      animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .playing .needle {
-      transform: rotate(-5deg);
-    }
-
-    /* Final message focus dim */
-    .dimScene {
-      filter: blur(1.5px) brightness(0.6);
-      transform: scale(0.98);
-      transition: all 1.5s ease;
-    }
-
-    /* Final overlay message */
-    .finalOverlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      z-index: 50;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.5s ease;
-    }
-
-    .finalOverlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .finalCard {
-      width: 92%;
-      max-width: 560px;
-      padding: 25px 20px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      box-shadow: 0px 0px 50px rgba(0,0,0,0.65);
-      text-align: center;
-      color: #ffeede;
-      line-height: 1.7;
-      font-size: 1.05rem;
-      font-weight: 700;
-      text-shadow: 0px 0px 12px rgba(255,190,140,0.2);
-    }
-
-    .finalCard h2 {
-      font-family: "Pacifico", cursive;
-      font-size: 2rem;
-      margin-bottom: 12px;
-      color: #ffd6b8;
-    }
-
-    .closeHint {
-      margin-top: 15px;
-      font-size: 0.85rem;
-      opacity: 0.7;
-      font-weight: 600;
-    }
-
-    @media(max-width: 480px) {
-      .player {
-        width: 320px;
-        height: 220px;
-      }
-      .plate {
-        width: 185px;
-        height: 185px;
-      }
-      .vinyl {
-        width: 160px;
-        height: 160px;
-      }
-      .lyricBox h1 {
-        font-size: 1.8rem;
-      }
-      .lyricText {
-        font-size: 1.05rem;
-      }
-    }
-  </style>
+</style>
 </head>
-
 <body>
 
+<div class="room">
   <div class="lampGlow"></div>
 
-  <div class="scene" id="scene">
+  <div class="dust" id="dust"></div>
 
-    <div class="lyricBox">
-      <h1>Our Vinyl of Love 🎶</h1>
-      <div class="lyricText" id="lyricText">(Tap the vinyl to play...)</div>
-      <div class="hintText">Every spin reveals one memory 💛</div>
+  <div class="table"></div>
+
+  <div class="playerWrapper">
+
+    <div class="messageBox">
+      <div class="messageText show" id="message">
+        Tap the vinyl... let the record speak ❤️
+      </div>
+      <div class="hint">Old school love never fades.</div>
     </div>
 
-    <div class="table">
-      <div class="player" id="player">
+    <div class="player">
+      <div class="knob"></div>
 
-        <div class="plate">
-          <div class="vinyl" id="vinyl">
-            <div class="label">R+Y</div>
-            <div class="pin"></div>
-          </div>
-        </div>
+      <div class="vinyl" id="vinyl">
+        <div class="vinylLabel">LOVE<br>RECORD</div>
+        <div class="shine"></div>
+      </div>
 
-        <div class="needle" id="needle"></div>
-
-        <div class="speaker">
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
-
-        <div class="controls">
-          <div class="btn"></div>
-          <div class="btn"></div>
-          <div class="btn"></div>
-        </div>
-
+      <div class="tonearm" id="tonearm">
+        <div class="tonearmBase"></div>
+        <div class="tonearmBody"></div>
+        <div class="needle"></div>
       </div>
     </div>
+
   </div>
 
-  <!-- Final Overlay -->
   <div class="finalOverlay" id="finalOverlay">
-    <div class="finalCard">
-      <h2>Last Track 💌</h2>
-      <div id="finalText">
-        Ruchi... <br><br>
-        This vinyl isn’t just music... it’s us. <br>
-        Every spin feels like a memory playing again. <br><br>
-        And honestly... you’re my favorite song. <br>
-        The kind that never gets old. <br>
-        The kind I want on repeat forever. <br><br>
-        If love had a soundtrack, it would sound like you. <br><br>
-        — Yours, Yash ❤️
-      </div>
-      <div class="closeHint">(Tap anywhere to close)</div>
-    </div>
+    <div class="finalText" id="finalText"></div>
   </div>
+</div>
 
-  <!-- Audio -->
-  <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_36e6b97c0c.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
-  </audio>
+<script>
+  // Create floating dust particles
+  const dust = document.getElementById("dust");
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement("span");
+    p.style.left = Math.random() * 100 + "%";
+    p.style.top = Math.random() * 100 + "%";
+    p.style.animationDuration = (6 + Math.random() * 10) + "s";
+    p.style.animationDelay = Math.random() * 5 + "s";
+    p.style.opacity = (0.1 + Math.random() * 0.3);
+    p.style.transform = `scale(${0.6 + Math.random() * 1.2})`;
+    dust.appendChild(p);
+  }
 
-  <audio id="needleSound" preload="auto" crossorigin="anonymous">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4d04b9a118.mp3?filename=vinyl-needle-101669.mp3" type="audio/mpeg">
-  </audio>
+  const vinyl = document.getElementById("vinyl");
+  const tonearm = document.getElementById("tonearm");
+  const message = document.getElementById("message");
+  const finalOverlay = document.getElementById("finalOverlay");
+  const finalText = document.getElementById("finalText");
 
-  <script>
-    const vinyl = document.getElementById("vinyl");
-    const player = document.getElementById("player");
-    const lyricText = document.getElementById("lyricText");
-    const scene = document.getElementById("scene");
+  let playing = false;
+  let msgIndex = 0;
 
-    const finalOverlay = document.getElementById("finalOverlay");
+  const messages = [
+    "This record is not vintage… it’s timeless.",
+    "Because every time I think of you, the world feels softer.",
+    "Like old songs… you stay in my head, in my heart.",
+    "If love had a soundtrack… your name would be the chorus.",
+    "And every beat would whisper: Ruchi ❤️",
+    "Some love is loud… ours is calm. Deep. Real.",
+    "The kind of love people only read about.",
+    "And I swear… I’d play you forever."
+  ];
 
-    const bgMusic = document.getElementById("bgMusic");
-    const needleSound = document.getElementById("needleSound");
+  const finalMessage = `
+    Ruchi… 💛<br><br>
+    If this was an old school love story, I’d still choose you in every chapter.<br>
+    I’d still wait outside your window.<br>
+    I’d still write letters, even if it took days to reach you.<br><br>
+    Because you’re not just someone I love…<br>
+    You’re the feeling I want to live in.<br><br>
+    And just like this record…<br>
+    My love for you will keep spinning… forever. 🎶❤️
+  `;
 
-    let playing = false;
-    let msgIndex = 0;
-    let audioUnlocked = false;
+  function showMessage(text) {
+    message.classList.remove("show");
+    setTimeout(() => {
+      message.innerHTML = text;
+      message.classList.add("show");
+    }, 250);
+  }
 
-    const messages = [
-      "Track #1: You feel like old-school love 💛",
-      "Track #2: The kind people write poems about 🌙",
-      "Track #3: The kind that stays even in silence 🕯️",
-      "Track #4: Your presence is my comfort place 🫂",
-      "Track #5: Even distance can’t mute what I feel 💌"
-    ];
+  vinyl.addEventListener("click", () => {
+    if (!playing) {
+      playing = true;
+      vinyl.classList.add("playing");
+      tonearm.classList.add("playingArm");
 
-    function unlockAudio() {
-      if (audioUnlocked) return;
-      audioUnlocked = true;
+      showMessage(messages[msgIndex]);
+      msgIndex++;
 
-      bgMusic.volume = 0.4;
-      needleSound.volume = 0.7;
-
-      bgMusic.play().catch(()=>{});
-      bgMusic.pause();
-    }
-
-    window.addEventListener("click", unlockAudio, { once: true });
-    window.addEventListener("touchstart", unlockAudio, { once: true });
-
-    function typeLine(text, i = 0) {
-      lyricText.innerHTML = "";
-      function loop() {
-        lyricText.innerHTML = text.slice(0, i);
-        i++;
-        if (i <= text.length) {
-          setTimeout(loop, 35);
-        }
-      }
-      loop();
-    }
-
-    function showFinal() {
-      scene.classList.add("dimScene");
-      finalOverlay.classList.add("show");
-    }
-
-    function playRecord() {
-      if (!audioUnlocked) unlockAudio();
-
-      if (!playing) {
-        playing = true;
-        player.classList.add("playing");
-
-        needleSound.currentTime = 0;
-        needleSound.play().catch(()=>{});
-
-        bgMusic.currentTime = 0;
-        bgMusic.play().catch(()=>{});
-
-        typeLine(messages[msgIndex]);
-      } else {
-        // next message
-        msgIndex++;
-
+      const interval = setInterval(() => {
         if (msgIndex < messages.length) {
-          typeLine(messages[msgIndex]);
+          showMessage(messages[msgIndex]);
+          msgIndex++;
         } else {
-          // stop record and show final
-          player.classList.remove("playing");
-          bgMusic.pause();
-          playing = false;
+          clearInterval(interval);
 
           setTimeout(() => {
-            showFinal();
-          }, 800);
+            finalText.innerHTML = finalMessage;
+            finalOverlay.classList.add("show");
+          }, 1400);
         }
+      }, 2200);
+
+    } else {
+      // If already playing, show next message faster
+      if (msgIndex < messages.length) {
+        showMessage(messages[msgIndex]);
+        msgIndex++;
       }
     }
+  });
 
-    vinyl.addEventListener("click", playRecord);
-    vinyl.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      playRecord();
-    });
-
-    finalOverlay.addEventListener("click", () => {
-      finalOverlay.classList.remove("show");
-      scene.classList.remove("dimScene");
-
-      msgIndex = 0;
-      lyricText.innerHTML = "(Tap the vinyl to play...)";
-    });
-  </script>
+  finalOverlay.addEventListener("click", () => {
+    finalOverlay.classList.remove("show");
+  });
+</script>
 
 </body>
 </html>
