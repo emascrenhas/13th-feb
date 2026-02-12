@@ -21,43 +21,58 @@
     background: radial-gradient(circle at top, #3b2c24, #120c09);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     color: white;
   }
- 
-.messageList {
-  max-height: 140px;
-  overflow-y: auto;
-  padding-right: 6px;
-}
 
-.messageList::-webkit-scrollbar {
-  width: 4px;
-}
-
-.messageList::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-}
   /* ---------- ROOM BACKGROUND ---------- */
   .room {
     position: relative;
     width: 100%;
-   min-height: 100vh;
-   height: auto;
+    min-height: 100vh;
+    height: auto;
     background: radial-gradient(circle at 70% 20%, rgba(255,180,90,0.25), transparent 60%),
                 radial-gradient(circle at 30% 40%, rgba(255,255,255,0.04), transparent 70%),
                 linear-gradient(to bottom, #241812, #0d0806);
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    padding-bottom: 40px;
+    padding-top: 90px;
+    padding-bottom: 70px;
+    overflow: hidden;
+  }
+
+  /* Heading */
+  .heading {
+    position: absolute;
+    top: 25px;
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+    padding: 0 15px;
+  }
+
+  .heading h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: rgba(255,240,220,0.95);
+    text-shadow: 0 5px 20px rgba(0,0,0,0.9);
+    letter-spacing: 0.5px;
+  }
+
+  .heading p {
+    margin-top: 6px;
+    font-size: 14px;
+    opacity: 0.75;
+    letter-spacing: 0.6px;
+    color: rgba(255,240,220,0.85);
+    text-shadow: 0 5px 18px rgba(0,0,0,0.9);
   }
 
   /* Lamp glow */
   .lampGlow {
     position: absolute;
-    top: 40px;
+    top: 60px;
     right: 40px;
     width: 220px;
     height: 220px;
@@ -80,6 +95,7 @@
     height: 100%;
     overflow: hidden;
     pointer-events: none;
+    z-index: 2;
   }
 
   .dust span {
@@ -106,6 +122,7 @@
     height: 42%;
     background: linear-gradient(to bottom, #4a2d1f, #2a150d);
     box-shadow: inset 0 20px 40px rgba(0,0,0,0.4);
+    z-index: 1;
   }
 
   /* Wood grain effect */
@@ -126,9 +143,9 @@
   /* ---------- PLAYER WRAPPER ---------- */
   .playerWrapper {
     position: relative;
-    width: min(520px, 92vw);
-    height: 360px;
-    z-index: 5;
+    width: min(540px, 92vw);
+    height: 430px;
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -138,7 +155,7 @@
   .player {
     position: relative;
     width: 100%;
-    height: 270px;
+    height: 285px;
     background: linear-gradient(to bottom, #2d2b2a, #151312);
     border-radius: 22px;
     box-shadow: 0 25px 55px rgba(0,0,0,0.7);
@@ -150,10 +167,10 @@
   .player::before {
     content: "";
     position: absolute;
-    bottom: -35px;
+    bottom: -45px;
     left: 10px;
     right: 10px;
-    height: 90px;
+    height: 105px;
     background: linear-gradient(to bottom, #6c3d25, #2b160d);
     border-radius: 18px;
     box-shadow: inset 0 10px 20px rgba(0,0,0,0.4);
@@ -163,7 +180,7 @@
   /* Knob */
   .knob {
     position: absolute;
-    bottom: -5px;
+    bottom: -12px;
     left: 40px;
     width: 45px;
     height: 45px;
@@ -187,11 +204,11 @@
   /* ---------- VINYL ---------- */
   .vinyl {
     position: absolute;
-    top: 25px;
+    top: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 190px;
-    height: 190px;
+    width: 195px;
+    height: 195px;
     border-radius: 50%;
     background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.18), transparent 55%),
                 radial-gradient(circle, #222 0%, #111 55%, #000 100%);
@@ -221,8 +238,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 60px;
-    height: 60px;
+    width: 62px;
+    height: 62px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: radial-gradient(circle, #f5d19c, #c07b2c);
@@ -270,8 +287,8 @@
   /* ---------- TONEARM ---------- */
   .tonearm {
     position: absolute;
-    top: 35px;
-    right: 50px;
+    top: 45px;
+    right: 55px;
     width: 130px;
     height: 16px;
     transform-origin: 10px 8px;
@@ -318,11 +335,27 @@
   /* ---------- MESSAGE AREA ---------- */
   .messageBox {
     position: absolute;
-    top: -90px;
+    top: -120px;
     width: 100%;
     text-align: center;
     padding: 0 20px;
     z-index: 50;
+  }
+
+  .messageList {
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: 6px;
+    padding-bottom: 5px;
+  }
+
+  .messageList::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .messageList::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
   }
 
   .messageText {
@@ -334,6 +367,7 @@
     transform: translateY(12px);
     transition: 0.6s ease;
     font-style: italic;
+    margin-bottom: 10px;
   }
 
   .messageText.show {
@@ -350,9 +384,9 @@
 
   /* ---------- FINAL OVERLAY ---------- */
   .finalOverlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.78);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -370,18 +404,22 @@
   }
 
   .finalText {
-    max-width: 600px;
+    max-width: 650px;
     font-size: 18px;
     line-height: 1.7;
     color: rgba(255,240,220,0.95);
     text-shadow: 0 4px 18px rgba(0,0,0,0.85);
     font-style: italic;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 22px;
+    border-radius: 18px;
   }
 
   /* Mobile improvements */
   @media (max-width: 500px) {
     .playerWrapper {
-      height: 340px;
+      height: 460px;
     }
 
     .messageText {
@@ -391,6 +429,10 @@
     .finalText {
       font-size: 16px;
     }
+
+    .heading h1 {
+      font-size: 22px;
+    }
   }
 
 </style>
@@ -398,6 +440,11 @@
 <body>
 
 <div class="room">
+  <div class="heading">
+    <h1>Vinyl Record of Love 🎶</h1>
+    <p>Tap the vinyl… and let the record speak ❤️</p>
+  </div>
+
   <div class="lampGlow"></div>
 
   <div class="dust" id="dust"></div>
@@ -407,13 +454,13 @@
   <div class="playerWrapper">
 
     <div class="messageBox">
-  <div class="messageList" id="messageList">
-    <div class="messageText show">
-      Tap the vinyl... let the record speak ❤️
+      <div class="messageList" id="messageList">
+        <div class="messageText show">
+          Tap the vinyl... let the record speak ❤️
+        </div>
+      </div>
+      <div class="hint">Old school love never fades.</div>
     </div>
-  </div>
-  <div class="hint">Old school love never fades.</div>
-</div>
 
     <div class="player">
       <div class="knob"></div>
@@ -437,6 +484,11 @@
   </div>
 </div>
 
+<!-- MUSIC FILE -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <script>
   // Create floating dust particles
   const dust = document.getElementById("dust");
@@ -456,9 +508,11 @@
   const messageList = document.getElementById("messageList");
   const finalOverlay = document.getElementById("finalOverlay");
   const finalText = document.getElementById("finalText");
+  const bgMusic = document.getElementById("bgMusic");
 
   let playing = false;
   let msgIndex = 0;
+  let interval = null;
 
   const messages = [
     "This record is not vintage… it’s timeless.",
@@ -482,29 +536,47 @@
     My love for you will keep spinning… forever. 🎶❤️
   `;
 
+  function fadeInMusic() {
+    bgMusic.volume = 0;
+    bgMusic.play().catch(()=>{});
+
+    let v = 0;
+    const fade = setInterval(() => {
+      v += 0.03;
+      if (v >= 0.6) {
+        v = 0.6;
+        clearInterval(fade);
+      }
+      bgMusic.volume = v;
+    }, 120);
+  }
+
   function showMessage(text) {
-  const div = document.createElement("div");
-  div.className = "messageText";
-  div.innerHTML = text;
+    const div = document.createElement("div");
+    div.className = "messageText";
+    div.innerHTML = text;
 
-  messageList.appendChild(div);
+    messageList.appendChild(div);
 
-  setTimeout(() => {
-    div.classList.add("show");
-    messageList.scrollTop = messageList.scrollHeight;
-  }, 50);
-}
+    setTimeout(() => {
+      div.classList.add("show");
+      messageList.scrollTop = messageList.scrollHeight;
+    }, 50);
+  }
 
   vinyl.addEventListener("click", () => {
     if (!playing) {
       playing = true;
+
       vinyl.classList.add("playing");
       tonearm.classList.add("playingArm");
+
+      fadeInMusic();
 
       showMessage(messages[msgIndex]);
       msgIndex++;
 
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         if (msgIndex < messages.length) {
           showMessage(messages[msgIndex]);
           msgIndex++;
