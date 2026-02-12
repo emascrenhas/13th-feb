@@ -633,11 +633,9 @@
   });
 
   // Close overlay only if clicked outside text
-  finalOverlay.addEventListener("click", (e) => {
-    if (e.target.id === "finalOverlay") {
-      finalOverlay.classList.remove("show");
-    }
-  });
+  finalOverlay.addEventListener("click", () => {
+  finalOverlay.classList.remove("show");
+});
 </script>
 
 </body>
