@@ -142,13 +142,13 @@
 
   /* ---------- PLAYER WRAPPER ---------- */
   .playerWrapper {
-    position: relative;
-    width: min(540px, 92vw);
-    height: 430px;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+  position: relative;
+  width: min(540px, 92vw);
+  height: 520px;   /* increased */
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   }
 
   /* ---------- PLAYER BODY ---------- */
@@ -334,19 +334,23 @@
 
   /* ---------- MESSAGE AREA ---------- */
   .messageBox {
-    position: absolute;
-    top: -120px;
-    width: 100%;
-    text-align: center;
-    padding: 0 20px;
-    z-index: 50;
-  }
+  position: absolute;
+  top: -210px;   /* moved higher properly */
+  width: 100%;
+  text-align: center;
+  padding: 0 20px;
+  z-index: 50;
+}
 
   .messageList {
-    max-height: 180px;
-    overflow-y: auto;
-    padding-right: 6px;
-    padding-bottom: 5px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 10px 12px;
+  padding-right: 8px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.08);
   }
 
   .messageList::-webkit-scrollbar {
@@ -376,11 +380,12 @@
   }
 
   .hint {
-    font-size: 13px;
-    opacity: 0.65;
-    margin-top: 10px;
-    letter-spacing: 0.5px;
-  }
+  font-size: 13px;
+  opacity: 0.65;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+}
 
   /* ---------- FINAL OVERLAY ---------- */
   .finalOverlay {
