@@ -3,235 +3,226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vinyl Record of Love ❤️</title>
+<title>Vintage Love Record</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Quicksand", sans-serif; }
-  body {
-    background: radial-gradient(circle at top, #2b1f1f, #000);
-    color: #fff;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Quicksand",sans-serif; }
+  body, html { width:100%; height:100%; overflow:hidden; }
 
-  /* Dust particles */
-  .dust {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    animation: dustFloat linear infinite;
-  }
-  @keyframes dustFloat {
-    0% { transform: translateY(0) translateX(0); opacity: 0.2; }
-    50% { opacity: 0.6; }
-    100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+  /* Background vintage room */
+  body {
+    background: url('https://i.ibb.co/7Qz5fXx/vintage-room.jpg') center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    transition: background 1s ease;
+    position: relative;
   }
 
   /* Table */
   .table {
-    width: 400px;
-    height: 400px;
-    background: linear-gradient(to bottom, #5a3d2b, #3b2a1e);
-    border-radius: 8px;
+    width: 100%;
+    max-width: 700px;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 20px 50px rgba(0,0,0,0.5);
-  }
-
-  /* Vinyl record */
-  .vinyl {
-    width: 250px;
     height: 250px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #111 0%, #000 60%);
-    box-shadow: inset 0 0 15px rgba(255,255,255,0.1), 0 0 20px rgba(0,0,0,0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    animation: spin 0s linear infinite;
-  }
-  .vinyl.playing {
-    animation: spin 3s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
+    background: url('https://i.ibb.co/k58HwsZ/table.png') bottom/contain no-repeat;
   }
 
-  .label {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, #ffccd5, #ff80aa);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Pacifico", cursive;
-    font-size: 0.9rem;
-    text-align: center;
-    color: #fff;
-    box-shadow: 0 0 10px rgba(255,255,255,0.3);
-  }
-
-  /* Messages */
-  .messageSleeve {
+  /* Record Player */
+  .record-player {
     position: absolute;
-    bottom: -160px;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 300px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 14px;
-    text-align: center;
-    font-family: "Pacifico", cursive;
-    color: #fff;
-    font-size: 1rem;
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.2);
+    height: 200px;
+    background: url('https://i.ibb.co/mT2qB5d/record-player.png') center/contain no-repeat;
+    cursor: pointer;
+  }
+
+  /* Record (rotating) */
+  .record {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    background: url('https://i.ibb.co/2cg1L4x/record.png') center/contain no-repeat;
+    border-radius: 50%;
+    transition: transform 0.3s linear;
+  }
+
+  .record.spin {
+    animation: rotateRecord 3s linear infinite;
+  }
+
+  @keyframes rotateRecord {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(360deg); }
+  }
+
+  /* Glow effect */
+  .record-glow {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,200,150,0.3), transparent 70%);
+    pointer-events: none;
     opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .record-glow.active { opacity: 1; animation: pulseGlow 1.5s infinite ease-in-out; }
+  @keyframes pulseGlow {
+    0%,100% { transform: translateX(-50%) scale(1); opacity:0.6; }
+    50% { transform: translateX(-50%) scale(1.1); opacity:1; }
+  }
+
+  /* Message container */
+  .message-box {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #fff;
+    min-height: 60px;
     transition: all 1s ease;
   }
-  .messageSleeve.show { opacity: 1; }
 
-  /* Musical notes */
+  .message-box.final {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  /* Dim background during final message */
+  .dim-bg::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background: rgba(0,0,0,0.35);
+    pointer-events:none;
+    transition: background 1s ease;
+  }
+
+  /* Optional musical notes floating */
   .note {
-    position: absolute;
-    font-size: 1.2rem;
-    color: #ffccd5;
-    animation: floatNote 5s linear forwards;
-  }
-  @keyframes floatNote {
-    0% { transform: translateY(0) scale(0.8); opacity: 1; }
-    100% { transform: translateY(-200px) scale(1.1); opacity: 0; }
+    position:absolute;
+    font-size:1.5rem;
+    color: #ffd7ec;
+    animation: floatUp 6s linear infinite;
+    pointer-events:none;
+    opacity:0.8;
   }
 
-  /* Final heart groove effect */
-  .heartGroove {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, rgba(255,100,150,0.2) 0%, transparent 60%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 1s ease;
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) scale(1); opacity:0; }
+    10% { opacity:0.8; }
+    100% { transform: translateY(-50px) scale(1.2); opacity:0; }
   }
-  .heartGroove.show { opacity: 1; }
-
-  /* Optional glow */
-  .vinylGlow {
-    position: absolute;
-    width: 270px;
-    height: 270px;
-    border-radius: 50%;
-    background: radial-gradient(circle at center, rgba(255,180,180,0.2), transparent 70%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-  }
-  .vinylGlow.show { opacity: 1; }
 </style>
 </head>
 <body>
 
-<!-- Dust particles -->
-<script>
-  for(let i=0;i<40;i++){
-    const dust = document.createElement('div');
-    dust.className = 'dust';
-    dust.style.left = Math.random()*100+'%';
-    dust.style.top = Math.random()*100+'%';
-    dust.style.animationDuration = 10 + Math.random()*10 + 's';
-    document.body.appendChild(dust);
-  }
-</script>
+  <div class="table"></div>
 
-<div class="table">
-  <div class="vinyl" id="vinyl">
-    <div class="label">💌 Love Spins</div>
+  <div class="record-player" id="recordPlayer">
+    <div class="record" id="record"></div>
+    <div class="record-glow" id="recordGlow"></div>
   </div>
-  <div class="heartGroove" id="heartGroove"></div>
-  <div class="vinylGlow" id="vinylGlow"></div>
-  <div class="messageSleeve" id="messageSleeve"></div>
-</div>
 
-<!-- Audio -->
-<audio id="vinylAudio" preload="auto" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_36e6b97c0c.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
-</audio>
-<audio id="crackleAudio" preload="auto">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1e5b2d7a6.mp3?filename=vinyl-crackle.mp3" type="audio/mpeg">
-</audio>
+  <div class="message-box" id="messageBox">Tap the record to start your love notes…💌</div>
+
+  <!-- Background dim overlay for final message -->
+  <div class="dim-bg" id="dimBg"></div>
+
+  <audio id="music" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_36e6b97c0c.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
+  </audio>
 
 <script>
-const vinyl = document.getElementById('vinyl');
-const vinylAudio = document.getElementById('vinylAudio');
-const crackleAudio = document.getElementById('crackleAudio');
-const messageSleeve = document.getElementById('messageSleeve');
-const heartGroove = document.getElementById('heartGroove');
-const vinylGlow = document.getElementById('vinylGlow');
+const record = document.getElementById('record');
+const glow = document.getElementById('recordGlow');
+const player = document.getElementById('recordPlayer');
+const msgBox = document.getElementById('messageBox');
+const dimBg = document.getElementById('dimBg');
+const music = document.getElementById('music');
 
-const loveMessages = [
-  "Every song is a memory 🎵",
-  "Every note reminds me of you 💕",
-  "I want to hug you forever 🫂",
-  "Your smile is my favorite melody 🌸",
-  "With you, life’s a romantic track 💖"
+const messages = [
+  "Hey Ruchi… 🥹",
+  "Just like this vinyl spins… my love spins for you endlessly… 💓",
+  "Every note on this record carries a hug for you 🫂",
+  "I wish I could sit with you, play this record… and watch time stop 🕰️",
+  "Promise… I'll always be your cozy corner, your warmth… 🌷"
 ];
 
-let playing = false;
+const finalMessage = `Ruchi…  
+Every hug, every heartbeat, every whisper of love is yours.  
+Even if distance separates us, know that this love is permanent.  
+I’ll always hold you close in my heart, forever and always 🫂💖`;
 
-// Unlock audio on first click
-function unlockAudio() {
-  vinylAudio.volume = 0.3;
-  crackleAudio.volume = 0.2;
-  vinylAudio.play().catch(()=>{});
-  crackleAudio.play().catch(()=>{});
+let messageIndex = 0;
+let musicStarted = false;
+
+function createFloatingNote() {
+  const note = document.createElement('div');
+  note.classList.add('note');
+  note.style.left = Math.random() * 90 + '%';
+  note.style.animationDuration = 4 + Math.random() * 3 + 's';
+  note.innerText = '🎵';
+  document.body.appendChild(note);
+  setTimeout(() => note.remove(), 6000);
 }
-window.addEventListener('click', unlockAudio, { once: true });
-window.addEventListener('touchstart', unlockAudio, { once: true });
 
-vinyl.addEventListener('click', () => {
-  if(playing) return;
-  playing = true;
-  vinyl.classList.add('playing');
-  vinylGlow.classList.add('show');
-  messageSleeve.classList.add('show');
+// Unlock music on first tap
+function startMusic() {
+  if(!musicStarted) {
+    music.volume = 0.3;
+    music.play().catch(()=>{});
+    musicStarted = true;
+  }
+}
 
-  // Animate notes
-  loveMessages.forEach((msg,i)=>{
-    setTimeout(()=>{
-      const note = document.createElement('div');
-      note.className = 'note';
-      note.innerText = '🎵';
-      note.style.left = 100 + Math.random()*50 + 'px';
-      document.body.appendChild(note);
+player.addEventListener('click', () => {
+  record.classList.add('spin');
+  glow.classList.add('active');
+  startMusic();
 
-      // Add text to sleeve progressively
-      messageSleeve.innerHTML = msg;
-
-      setTimeout(()=>{ note.remove() }, 5000);
-
-      // Final heart groove on last message
-      if(i === loveMessages.length-1){
-        setTimeout(()=>{
-          heartGroove.classList.add('show');
-        },1000);
-      }
-    }, i*3000);
-  });
+  // Start showing messages
+  msgBox.innerHTML = '';
+  messageIndex = 0;
+  const msgInterval = setInterval(() => {
+    if(messageIndex < messages.length) {
+      msgBox.innerHTML += messages[messageIndex] + "<br><br>";
+      createFloatingNote();
+      messageIndex++;
+    } else {
+      clearInterval(msgInterval);
+      // After all messages, show final message with background dim
+      setTimeout(() => {
+        dimBg.style.background = 'rgba(0,0,0,0.35)';
+        msgBox.innerHTML = finalMessage;
+        msgBox.classList.add('final');
+      }, 800);
+    }
+  }, 1800);
 });
 </script>
-
 </body>
 </html>
