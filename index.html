@@ -384,37 +384,57 @@
 
   /* ---------- FINAL OVERLAY ---------- */
   .finalOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.78);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 28px;
-    text-align: center;
-    z-index: 200;
-    opacity: 0;
-    pointer-events: none;
-    transition: 1s ease;
-  }
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 28px;
+  text-align: center;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: 1s ease;
 
-  .finalOverlay.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  overflow-y: auto; /* ✅ scrollable overlay */
+}
 
-  .finalText {
-    max-width: 650px;
-    font-size: 18px;
-    line-height: 1.7;
-    color: rgba(255,240,220,0.95);
-    text-shadow: 0 4px 18px rgba(0,0,0,0.85);
-    font-style: italic;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 22px;
-    border-radius: 18px;
-  }
+.finalOverlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.finalText {
+  max-width: 650px;
+  width: 100%;
+  max-height: 80vh;   /* ✅ prevents going out of screen */
+  overflow-y: auto;   /* ✅ scroll inside message box */
+  padding: 22px;
+
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255,240,220,0.95);
+  text-shadow: 0 4px 18px rgba(0,0,0,0.85);
+  font-style: italic;
+
+  background: rgba(30, 18, 12, 0.55); /* ✨ makes it look premium */
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+
+  backdrop-filter: blur(6px);
+}
+
+/* Scrollbar styling for final text */
+.finalText::-webkit-scrollbar {
+  width: 6px;
+}
+
+.finalText::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 10px;
+}
 
   /* Mobile improvements */
   @media (max-width: 500px) {
@@ -456,10 +476,10 @@
     <div class="messageBox">
       <div class="messageList" id="messageList">
         <div class="messageText show">
-          Tap the vinyl... let the record speak ❤️
+          
         </div>
       </div>
-      <div class="hint">Old school love never fades.. <br> and so is ours🙂‍↔️💞</div>
+      <div class="hint">Old school love never fades.. <br> and so is ours🙂‍↔️💞<br> Tap the vinyl... let the record speak ❤️</div>
     </div>
 
     <div class="player">
