@@ -1,1 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💋 Kiss Day</title>
 
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Quicksand", sans-serif;
+      user-select: none;
+    }
+
+    body {
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      background: radial-gradient(circle at top, #0c1224, #02040b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      transition: background 2s ease;
+    }
+
+    /* Rain overlay */
+    .rain {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image: linear-gradient(
+        rgba(255,255,255,0.12) 1px,
+        transparent 1px
+      );
+      background-size: 2px 40px;
+      opacity: 0.18;
+      animation: rainMove 0.5s linear infinite;
+      filter: blur(0.3px);
+    }
+
+    @keyframes rainMove {
+      from { background-position: 0 0; }
+      to { background-position: 0 80px; }
+    }
+
+    /* Fog */
+    .fog {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.07), transparent 70%);
+      opacity: 0.35;
+      animation: fogMove 6s ease-in-out infinite;
+    }
+
+    @keyframes fogMove {
+      0% { transform: scale(1); opacity: 0.25; }
+      50% { transform: scale(1.08); opacity: 0.38; }
+      100% { transform: scale(1); opacity: 0.25; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 92%;
+      max-width: 520px;
+      text-align: center;
+      padding: 30px 22px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0px 0px 40px rgba(0,0,0,0.5);
+      opacity: 1;
+      transform: scale(1);
+      transition: all 1.2s ease;
+    }
+
+    .fadeOut {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+
+    h1 {
+      font-family: "Pacifico", cursive;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #ffd0e4;
+      text-shadow: 0px 0px 18px rgba(255, 150, 200, 0.35);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.92;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #e9f0ff;
+    }
+
+    .mainMessage {
+      font-size: 1.2rem;
+      line-height: 1.75;
+      padding: 16px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      margin-bottom: 18px;
+      min-height: 120px;
+      font-weight: 700;
+      color: #ffe6f2;
+      text-shadow: 0px 0px 14px rgba(255, 160, 210, 0.22);
+      transition: all 0.8s ease;
+      overflow-wrap: break-word;
+    }
+
+    /* Silhouette Wrapper */
+    .silhouetteWrap {
+      width: 250px;
+      height: 250px;
+      margin: 0 auto 18px auto;
+      position: relative;
+    }
+
+    .silhouette {
+      width: 210px;
+      height: 210px;
+      margin: 20px auto;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.22), rgba(255,255,255,0.04));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0px 0px 30px rgba(255, 160, 220, 0.18);
+      transition: all 1.4s ease;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    /* Kiss couple */
+    .kissCouple {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      opacity: 0.96;
+      transition: all 1.2s ease;
+      filter: drop-shadow(0px 0px 16px rgba(0,0,0,0.45));
+    }
+
+    .personLeft,
+    .personRight {
+      position: absolute;
+      width: 78px;
+      height: 135px;
+      top: 20px;
+      border-radius: 50px;
+      transition: all 1.2s ease;
+      background: linear-gradient(180deg, rgba(255,160,200,0.95), rgba(130,60,110,0.85));
+      box-shadow: inset 0px 0px 10px rgba(255,255,255,0.08);
+    }
+
+    .personLeft {
+      left: 10px;
+      transform: rotate(-6deg);
+    }
+
+    .personRight {
+      right: 10px;
+      transform: rotate(6deg);
+      background: linear-gradient(180deg, rgba(170,190,255,0.95), rgba(80,70,170,0.85));
+    }
+
+    /* heads */
+    .personLeft::before,
+    .personRight::before {
+      content: "";
+      position: absolute;
+      top: -28px;
+      left: 12px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(255,210,230,0.95), rgba(160,90,130,0.85));
+      box-shadow: inset 0px 0px 10px rgba(255,255,255,0.12);
+    }
+
+    .personRight::before {
+      background: linear-gradient(180deg, rgba(220,230,255,0.95), rgba(110,90,200,0.85));
+    }
+
+    /* arms */
+    .personLeft::after,
+    .personRight::after {
+      content: "";
+      position: absolute;
+      top: 55px;
+      width: 70px;
+      height: 24px;
+      border-radius: 25px;
+      opacity: 0.95;
+      transition: all 1.2s ease;
+      background: linear-gradient(180deg, rgba(255,220,240,0.9), rgba(170,90,130,0.85));
+    }
+
+    .personRight::after {
+      background: linear-gradient(180deg, rgba(230,240,255,0.9), rgba(110,90,200,0.85));
+    }
+
+    .personLeft::after {
+      left: 38px;
+      transform: rotate(25deg);
+    }
+
+    .personRight::after {
+      right: 38px;
+      transform: rotate(-25deg);
+    }
+
+    /* kiss glow pulse */
+    .kissPulse {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      opacity: 0;
+      background: radial-gradient(circle at center, rgba(255,120,180,0.55), transparent 65%);
+      transform: scale(0.9);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      pointer-events: none;
+    }
+
+    /* Kiss animation */
+    .kissing {
+      transform: scale(1.08);
+      box-shadow: 0px 0px 70px rgba(255,120,180,0.55);
+    }
+
+    .kissing .kissCouple {
+      opacity: 1;
+      transform: scale(1.08) translateY(-2px);
+      animation: microKiss 1.4s ease-in-out infinite;
+    }
+
+    @keyframes microKiss {
+      0% { transform: scale(1.08) translateY(-2px); }
+      50% { transform: scale(1.1) translateY(-4px); }
+      100% { transform: scale(1.08) translateY(-2px); }
+    }
+
+    .kissing .personLeft {
+      left: 30px;
+      transform: rotate(-2deg);
+    }
+
+    .kissing .personRight {
+      right: 30px;
+      transform: rotate(2deg);
+    }
+
+    .kissing .personLeft::after {
+      transform: rotate(8deg);
+    }
+
+    .kissing .personRight::after {
+      transform: rotate(-8deg);
+    }
+
+    .kissing .kissPulse {
+      opacity: 1;
+      transform: scale(1.15);
+      animation: pulseGlow 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.65; transform: scale(1.05); }
+      50% { opacity: 1; transform: scale(1.18); }
+      100% { opacity: 0.65; transform: scale(1.05); }
+    }
+
+    /* Progress Ring */
+    .progressRing {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 250px;
+      transform: rotate(-90deg);
+      pointer-events: none;
+    }
+
+    .progressRing circle {
+      fill: none;
+      stroke-width: 7;
+      stroke-linecap: round;
+    }
+
+    .progressBg {
+      stroke: rgba(255,255,255,0.12);
+    }
+
+    .progressBar {
+      stroke: rgba(255, 140, 200, 0.95);
+      stroke-dasharray: 720;
+      stroke-dashoffset: 720;
+      transition: stroke-dashoffset 0.08s linear;
+      filter: drop-shadow(0px 0px 12px rgba(255,120,200,0.4));
+    }
+
+    .holdText {
+      margin-top: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      opacity: 0.95;
+      color: #ffe6f2;
+    }
+
+    .holdHint {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: 6px;
+      color: #cfe0ff;
+    }
+
+    .warning {
+      margin-top: 14px;
+      font-size: 0.95rem;
+      color: #ffd0e0;
+      opacity: 0.92;
+      min-height: 22px;
+      font-weight: 700;
+    }
+
+    /* Kiss glow overlay */
+    .kissGlow {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      opacity: 0;
+      background: radial-gradient(circle at center, rgba(255,120,180,0.22), transparent 70%);
+      transition: opacity 2s ease;
+      pointer-events: none;
+    }
+
+    /* Redirect overlay */
+    .redirectOverlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 99;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: "Pacifico", cursive;
+      font-size: 2rem;
+      color: #ffe6f2;
+      text-shadow: 0px 0px 18px rgba(255,120,200,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    .redirectOverlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .redirectOverlay small {
+      font-size: 1rem;
+      margin-top: 10px;
+      opacity: 0.8;
+      font-family: "Quicksand", sans-serif;
+    }
+
+    /* Rain Drops Tap Phase */
+    .dropArea {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: radial-gradient(circle at top, rgba(10, 10, 25, 0.85), rgba(0,0,0,0.95));
+      transition: opacity 1.2s ease;
+      opacity: 0;
+    }
+
+    .dropArea.show {
+      opacity: 1;
+    }
+
+    .dropInstruction {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 0.85rem;
+      opacity: 0.85;
+      font-family: "Pacifico", cursive;
+      color: #ffe6f2;
+      text-shadow: 0px 0px 10px rgba(255, 120, 200, 0.3);
+    }
+
+    .dropCount {
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      font-size: 0.85rem;
+      opacity: 0.8;
+      font-weight: 700;
+      color: #cfe0ff;
+    }
+
+    .dropMessageList {
+      position: absolute;
+      bottom: 35px;
+      width: 90%;
+      max-width: 500px;
+      padding: 16px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      text-align: left;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .dropMessageList p {
+      margin-bottom: 10px;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: msgFadeIn 0.6s ease forwards;
+      color: #ffe6f2;
+    }
+
+    @keyframes msgFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+
+    .drop {
+      position: absolute;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: rgba(170, 210, 255, 0.16);
+      border: 1px solid rgba(190, 230, 255, 0.35);
+      box-shadow: 0px 0px 18px rgba(140, 200, 255, 0.25);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.6rem;
+      cursor: pointer;
+      animation: floatDown 10s linear infinite;
+      backdrop-filter: blur(6px);
+    }
+
+    @keyframes floatDown {
+      from { transform: translateY(-120px); }
+      to { transform: translateY(110vh); }
+    }
+
+    .drop.pop {
+      animation: popAnim 0.35s ease forwards;
+    }
+
+    @keyframes popAnim {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* Final Scene */
+    .finalScene {
+      position: absolute;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: radial-gradient(circle at top, rgba(40, 10, 30, 0.95), rgba(0,0,0,1));
+      padding: 25px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .finalScene.show {
+      opacity: 1;
+    }
+
+    .filmTitle {
+      font-family: "Pacifico", cursive;
+      font-size: 2.1rem;
+      color: #ffd0e4;
+      margin-bottom: 10px;
+      text-shadow: 0px 0px 20px rgba(255,120,200,0.35);
+    }
+
+    .filmCard {
+      width: 100%;
+      max-width: 500px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      line-height: 1.7;
+      font-size: 1.05rem;
+      color: #ffe6f2;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 1.2s ease;
+      margin-top: 14px;
+    }
+
+    .filmCard.show {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+
+    .kissStamp {
+      margin-top: 16px;
+      font-size: 2.5rem;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: all 1.2s ease;
+    }
+
+    .kissStamp.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="rain"></div>
+  <div class="fog"></div>
+  <div class="kissGlow" id="kissGlow"></div>
+
+  <!-- Redirect -->
+  <div class="redirectOverlay" id="redirectOverlay">
+    Redirecting...
+    <small>just a second Ruchi 💙</small>
+  </div>
+
+  <!-- Main Page -->
+  <div class="container" id="mainContainer">
+    <h1>Happy Kiss Day, my favorite Ruchi 💋🥺</h1>
+
+    <div class="subtitle">
+      kuch cheeze words me explain nhi hoti...<br>
+      bas feel hoti hai...<br>
+      aur ek kiss... woh toh direct soul tak jati hai 🥹💞<br>
+      so today... i’m sending you one 💋
+    </div>
+
+    <div class="mainMessage" id="mainMessage">
+      (A kiss is waiting...)
+    </div>
+
+    <div class="silhouetteWrap">
+
+      <svg class="progressRing">
+        <circle class="progressBg" cx="125" cy="125" r="115"></circle>
+        <circle class="progressBar" id="progressBar" cx="125" cy="125" r="115"></circle>
+      </svg>
+
+      <div class="silhouette" id="silhouette">
+        <div class="kissPulse"></div>
+
+        <div class="kissCouple">
+          <div class="personLeft"></div>
+          <div class="personRight"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="holdText">Tap and hold on them to kiss…💋</div>
+    <div class="holdHint">(Hold for 10 seconds)</div>
+
+    <div class="warning" id="warningText"></div>
+  </div>
+
+  <!-- Drops Phase -->
+  <div class="dropArea" id="dropArea">
+    <div class="dropInstruction">Tap / pop all drops 💧</div>
+    <div class="dropCount" id="dropCount">Drops popped: 0/8</div>
+    <div class="dropMessageList" id="dropMessageList"></div>
+  </div>
+
+  <!-- Final Scene -->
+  <div class="finalScene" id="finalScene">
+    <div class="filmTitle">🎬 Final Kiss Delivered 💋</div>
+
+    <div class="kissStamp" id="kissStamp">💋</div>
+
+    <div class="filmCard" id="filmCard">
+      Ruchi... 🥺💞<br><br>
+      ek kiss sirf lips pe nahi hoti...<br>
+      woh ek promise hota hai...<br>
+      ki i’m yours.<br><br>
+      aur tu meri.<br><br>
+      whenever you feel alone...<br>
+      just imagine me kissing your forehead softly...<br>
+      and saying:<br><br>
+      <b>"I’m here."</b><br>
+      <b>"Always."</b><br><br>
+      — Yours, Yash ❤️
+    </div>
+  </div>
+
+  <!-- MUSIC -->
+  <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_36e6b97c0c.mp3?filename=romantic-piano-112191.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="heartbeat" loop preload="auto" crossorigin="anonymous">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9d0a7c8c45.mp3?filename=heartbeat-102060.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="kissSound" preload="auto" crossorigin="anonymous">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_10e0c5b9e0.mp3?filename=kiss-105118.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="popSound" preload="auto" crossorigin="anonymous">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5fd91e6d3a.mp3?filename=pop-94319.mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+  const mainMessage = document.getElementById("mainMessage");
+  const warningText = document.getElementById("warningText");
+  const silhouette = document.getElementById("silhouette");
+  const kissGlow = document.getElementById("kissGlow");
+
+  const dropArea = document.getElementById("dropArea");
+  const dropMessageList = document.getElementById("dropMessageList");
+  const dropCountText = document.getElementById("dropCount");
+
+  const finalScene = document.getElementById("finalScene");
+  const kissStamp = document.getElementById("kissStamp");
+  const filmCard = document.getElementById("filmCard");
+
+  const bgMusic = document.getElementById("bgMusic");
+  const heartbeat = document.getElementById("heartbeat");
+  const kissSound = document.getElementById("kissSound");
+  const popSound = document.getElementById("popSound");
+
+  const redirectOverlay = document.getElementById("redirectOverlay");
+  const progressBar = document.getElementById("progressBar");
+
+  let holdTimer;
+  let kissUnlocked = false;
+  let holdStartTime = 0;
+
+  const holdTarget = 10;
+
+  const kissMessages = [
+    "Come closer...🥺💋",
+    "Just one kiss...",
+    "Slow... soft... yours 💞",
+  ];
+
+  let audioUnlocked = false;
+
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+
+    bgMusic.volume = 0.30;
+    heartbeat.volume = 0.10;
+    kissSound.volume = 0.75;
+    popSound.volume = 0.50;
+
+    bgMusic.play().catch(()=>{});
+  }
+
+  window.addEventListener("click", unlockAudio, { once: true });
+  window.addEventListener("touchstart", unlockAudio, { once: true });
+
+  function showRedirect(callback) {
+    redirectOverlay.classList.add("show");
+
+    setTimeout(() => {
+      redirectOverlay.classList.remove("show");
+      setTimeout(() => callback(), 650);
+    }, 1400);
+  }
+
+  function updateProgressRing(secondsHeld) {
+    const circumference = 720;
+    const progress = Math.min(secondsHeld / holdTarget, 1);
+    const offset = circumference - (circumference * progress);
+    progressBar.style.strokeDashoffset = offset;
+  }
+
+  function resetProgressRing() {
+    progressBar.style.strokeDashoffset = 720;
+  }
+
+  function typeMessage(lines, index = 0) {
+    if (index >= lines.length) return;
+    mainMessage.innerHTML += `<br>${lines[index]}`;
+    setTimeout(() => typeMessage(lines, index + 1), 900);
+  }
+
+  function resetText() {
+    mainMessage.innerHTML = "";
+  }
+
+  function startKiss() {
+    if (kissUnlocked) return;
+
+    unlockAudio();
+
+    warningText.innerText = "";
+    resetText();
+    resetProgressRing();
+
+    document.body.style.background = "radial-gradient(circle at top, #4a0c24, #08020b)";
+    kissGlow.style.opacity = "1";
+
+    heartbeat.currentTime = 0;
+    heartbeat.play().catch(()=>{});
+
+    silhouette.classList.add("kissing");
+
+    holdStartTime = Date.now();
+    mainMessage.innerHTML = "Kissing Ruchi...💋🥹";
+
+    setTimeout(() => {
+      resetText();
+      typeMessage(kissMessages);
+    }, 650);
+
+    holdTimer = setInterval(() => {
+      const elapsed = (Date.now() - holdStartTime) / 1000;
+      updateProgressRing(elapsed);
+
+      heartbeat.volume = Math.min(0.6, heartbeat.volume + 0.02);
+
+      if (elapsed >= holdTarget) {
+        clearInterval(holdTimer);
+        unlockKiss();
+      }
+    }, 80);
+  }
+
+  function stopKiss() {
+    if (kissUnlocked) return;
+
+    clearInterval(holdTimer);
+
+    document.body.style.background = "radial-gradient(circle at top, #0c1224, #02040b)";
+    kissGlow.style.opacity = "0";
+
+    silhouette.classList.remove("kissing");
+
+    heartbeat.pause();
+
+    warningText.innerText = "Don’t stop... just one more second 😭💋";
+    mainMessage.innerHTML = "Don’t stop... just one more second 😭💋";
+
+    resetProgressRing();
+  }
+
+  function unlockKiss() {
+    kissUnlocked = true;
+    heartbeat.pause();
+
+    kissSound.currentTime = 0;
+    kissSound.play().catch(()=>{});
+
+    warningText.innerText = "";
+    mainMessage.innerHTML = "This kiss is forever. 💋🌹";
+
+    setTimeout(() => {
+      showRedirect(() => {
+        startDropPhase();
+      });
+    }, 1500);
+  }
+
+  silhouette.addEventListener("mousedown", startKiss);
+  silhouette.addEventListener("mouseup", stopKiss);
+  silhouette.addEventListener("mouseleave", stopKiss);
+
+  silhouette.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    startKiss();
+  });
+
+  silhouette.addEventListener("touchend", stopKiss);
+
+  const dropKisses = [
+    "💋 Promise: I’ll kiss your forehead when you’re tired 🥺",
+    "💋 Promise: I’ll kiss your cheeks when you’re sad 🌸",
+    "💋 Promise: I’ll kiss your hands when you overthink 🤍",
+    "💋 Promise: I’ll kiss your lips when you miss me 😭",
+    "💋 Promise: I’ll kiss your scars and heal them 💞",
+    "💋 Promise: I’ll kiss you in silence too 🫂",
+    "💋 Promise: I’ll kiss you like you’re my whole world 🌍",
+    "💋 Promise: I’ll kiss you because you’re mine 💙"
+  ];
+
+  let popped = 0;
+
+  function startDropPhase() {
+    document.getElementById("mainContainer").classList.add("fadeOut");
+
+    setTimeout(() => {
+      document.getElementById("mainContainer").style.display = "none";
+      dropArea.style.display = "flex";
+
+      setTimeout(() => {
+        dropArea.classList.add("show");
+      }, 100);
+
+      for (let i = 0; i < 8; i++) {
+        createDrop(i);
+      }
+    }, 900);
+  }
+
+  function createDrop(index) {
+    const drop = document.createElement("div");
+    drop.classList.add("drop");
+    drop.innerHTML = "💧";
+
+    drop.style.left = Math.random() * 80 + 10 + "%";
+    drop.style.animationDuration = (9 + Math.random() * 4) + "s";
+    drop.style.animationDelay = (Math.random() * 2) + "s";
+
+    drop.addEventListener("click", () => {
+      if (drop.classList.contains("pop")) return;
+
+      drop.classList.add("pop");
+
+      popSound.currentTime = 0;
+      popSound.play().catch(()=>{});
+
+      popped++;
+      dropCountText.innerText = `Drops popped: ${popped}/8`;
+
+      const msg = document.createElement("p");
+      msg.innerText = dropKisses[index];
+      dropMessageList.appendChild(msg);
+
+      dropMessageList.scrollTop = dropMessageList.scrollHeight;
+
+      setTimeout(() => {
+        drop.remove();
+      }, 350);
+
+      if (popped === 8) {
+        setTimeout(() => {
+          showRedirect(() => {
+            startFinalScene();
+          });
+        }, 1500);
+      }
+    });
+
+    dropArea.appendChild(drop);
+  }
+
+  function startFinalScene() {
+    dropArea.classList.remove("show");
+
+    setTimeout(() => {
+      dropArea.style.display = "none";
+      finalScene.style.display = "flex";
+
+      setTimeout(() => {
+        finalScene.classList.add("show");
+      }, 100);
+
+      setTimeout(() => {
+        kissStamp.classList.add("show");
+      }, 900);
+
+      setTimeout(() => {
+        filmCard.classList.add("show");
+      }, 1800);
+
+    }, 900);
+  }
+</script>
+
+</body>
+    </html>
